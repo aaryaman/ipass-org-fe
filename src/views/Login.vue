@@ -2,11 +2,11 @@
     <section class="page-wrap">
         <div class="content-wrap">
             <div class="logo">
-                <img src="../assets/path-logo.svg" alt />
+                <img src="../assets/bmc.jpeg" alt />
             </div>
             <form ref="otpForm" class="log-in-form" v-if="otpForm">
                 <h2 class="text-center">
-                    Enter your Phone Number to get an OTP
+                    Enter your phone number to get an OTP
                 </h2>
                 <b-field label="Phone Number">
                     <b-input></b-input>

@@ -3,14 +3,14 @@
         <div class="create-request-container">
             <transition mode="out-in" name="fade">
                 <div v-if="!requestCreated">
-                    <div class="title is-4">Create Request</div>
+                    <div class="title is-4">Issue Vouchers</div>
                     <br />
 
                     <transition appear mode="out-in" name="fade">
                         <div>
                             <div class="subtitle is-6">
-                                NOTE: You can claim upto 5,000 passes
-                                <br />only, in a single request
+                                NOTE: You can issue only 5,000 
+                                <br /> passes in a single request
                             </div>
 
                             <div></div>
@@ -25,7 +25,7 @@
                                 size="is-small"
                                 tag="a"
                                 type="is-white"
-                                >Download Pass Template</b-button
+                                >Download Voucher Issuance Template</b-button
                             >
 
                             <hr />
@@ -33,8 +33,10 @@
                             <div class="title is-6">Upload the file</div>
                             <div></div>
                             <div class="subtitle is-7">
-                                Ensure all details have been filled in the
-                                template file
+                                Ensure that column 1 contains the name, column 2 
+                                <br /> contains the mobile number, column 3 contains the 
+                                <br /> ID type (eg. Aadhaar/PAN/MNREGA/BMC), and column 4
+                                <br /> contains the last 4 digits of the ID chosen in column 3
                             </div>
 
                             <label
@@ -87,10 +89,9 @@
                             />
                         </div>
 
-                        <div class="title is-4">Request sent successfully!</div>
+                        <div class="title is-4">Vouchers issued successfully!</div>
                         <div class="subtitle is-7">
-                            Kindly wait until we can we can review and get back
-                            with the status of your application
+                            The vouchers will shortly be issued via SMS to the mobile numbers of the voucher holders.
                         </div>
                     </div>
                 </template>
@@ -107,7 +108,7 @@
                         type="is-primary"
                     >
                         <span v-if="requestCreated">Done</span>
-                        <span v-else>Send Request</span>
+                        <span v-else>Issue Vouchers</span>
                     </b-button>
                 </div>
             </transition>

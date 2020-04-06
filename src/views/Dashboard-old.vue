@@ -10,6 +10,7 @@
                                 class="has-text-black is-size-5 has-text-weight-semibold"
                             >
                                 {{ totalOrders | formatNumber }} Requests
+
                             </div>
                             <div class="seperator"></div>
                             <div
@@ -24,7 +25,7 @@
                             <b-button
                                 @click="openCreateRequest"
                                 type="is-primary"
-                                >Create Request</b-button
+                                >Issue Vouchers</b-button
                             >
                         </div>
                     </div>

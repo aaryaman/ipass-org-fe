@@ -6,7 +6,7 @@
             </div>
             <form class="log-in-form">
                 <h2 class="text-center">
-                    Enter your Phone Number to get an OTP
+                    Enter your phone number to get an OTP
                 </h2>
                 <b-field label="Phone Number" :label-position="labelPosition">
                     <b-input></b-input>
