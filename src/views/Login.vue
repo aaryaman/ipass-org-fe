@@ -32,9 +32,8 @@
                     type="is-primary"
                     @click.prevent="attemptLogin"
                     :disabled="isLoading"
+                    >Login</b-button
                 >
-                    Login
-                </b-button>
                 <p class="text-center" @click.prevent="resendOtp">
                     <a href="#">Resend OTP</a>
                 </p>
@@ -87,7 +86,7 @@ export default {
         },
         attemptLogin() {
             if (this.form.otp === '123456') {
-                return this.$router.push('/voucher/redeem');
+                return this.$router.push('/dashboard');
             } else {
                 this.$buefy.toast.open({
                     duration: 5000,

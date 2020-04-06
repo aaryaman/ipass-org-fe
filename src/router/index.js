@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Dashboard from '../views/Dashboard.vue';
+import DashboardOld from '../views/Dashboard-old.vue';
 import LabDetails from '../views/LabDetails.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
@@ -45,10 +46,9 @@ const routes = [
         },
         children: [
             {
-                path: '/',
-                meta: {
-                    auth: true
-                }
+                path: '/dashboard',
+                name: 'Dashboard',
+                component: DashboardOld
             },
             {
                 path: 'lab-details',

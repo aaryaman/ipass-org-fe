@@ -3,15 +3,16 @@
         <b-navbar type="is-primary">
             <template slot="brand">
                 <b-navbar-item :to="{ path: '/' }" tag="router-link">
-                    <img alt="iPass Logo" src="../assets/immunopass_logo_white.png" />
+                    <img
+                        alt="iPass Logo"
+                        src="../assets/immunopass_white_logo.png"
+                    />
                 </b-navbar-item>
             </template>
             <template slot="start">
                 <div class="is-flex ai-center">
                     <div class="seperator"></div>
-                    <div class="title is-4 has-text-white">
-                        BMC Dashboard
-                    </div>
+                    <div class="title is-4 has-text-white">BMC Dashboard</div>
                 </div>
             </template>
             <template slot="end">

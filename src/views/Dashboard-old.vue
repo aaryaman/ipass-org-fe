@@ -1,23 +1,26 @@
 <template>
     <div>
-        <app-header></app-header>
         <div class="app-body">
             <div class="container">
                 <div class="level">
                     <div class="level-left">
                         <div class="level-item org-details">
                             <div
-                                class="has-text-black is-size-5 has-text-weight-semibold"
+                                class="has-text-black is-size-5 has-text-weight-semibold is-full-mobile"
                             >
-                                {{ totalOrders | formatNumber }} Requests
-
+                                {{ availableOrders | formatNumber }} vouchers
+                                available
                             </div>
                             <div class="seperator"></div>
                             <div
-                                class="is-block has-text-black has-text-weight-semibold"
+                                class="has-text-black is-size-5 has-text-weight-semibold is-full-mobile"
                             >
-                                <div class="is-size-5">{{ org.name }}</div>
+                                {{ issuedOrders | formatNumber }} vouchers
+                                issued
                             </div>
+                            <!-- <div class="is-block has-text-black has-text-weight-semibold">
+                                <div class="is-size-5">{{ org.name }}</div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="level-right">
@@ -25,13 +28,11 @@
                             <b-button
                                 @click="openCreateRequest"
                                 type="is-primary"
-                                >Issue Vouchers</b-button
+                                >Create Request</b-button
                             >
                         </div>
                     </div>
                 </div>
-
-                <orders-table></orders-table>
             </div>
         </div>
         <create-request
@@ -43,35 +44,36 @@
 </template>
 
 <script>
-import AppHeader from '../components/AppHeader.vue';
 import CreateRequest from '../components/CreateRequest.vue';
-import EPassService from '../service/EPassService';
-import OrdersTable from '../components/OrdersTable.vue';
-import { showError } from '../utils/toast';
+// import EPassService from '../service/EPassService';
+// import { showError } from '../utils/toast';
 
 export default {
     name: 'Dashboard',
     components: {
-        AppHeader,
-        CreateRequest,
-        OrdersTable
+        CreateRequest
     },
     data() {
-        let org = localStorage.getItem('org');
-
-        if (org) {
-            org = JSON.parse(org);
-        }
-
+        // let org = localStorage.getItem('org');
+        // if (org) {
+        //     org = JSON.parse(org);
+        // }
         return {
             openCR: false,
-            org: org || {}
+            total: 100000,
+            issued: 0
         };
     },
 
     computed: {
         totalOrders() {
-            return this.$store.state.orderList.length;
+            return this.total;
+        },
+        issuedOrders() {
+            return this.issued;
+        },
+        availableOrders() {
+            return this.total - this.issued;
         }
     },
     filters: {
@@ -83,34 +85,31 @@ export default {
         openCreateRequest() {
             this.openCR = true;
         },
-
-        async fetchOrg() {
-            try {
-                const { data } = await EPassService.getOrganization();
-
-                this.org = data;
-                localStorage.setItem('org', JSON.stringify(data));
-            } catch (error) {
-                showError('Unable to fetch organization');
-            }
-        },
-
+        // async fetchOrg() {
+        //     try {
+        //         const { data } = await EPassService.getOrganization();
+        //         this.org = data;
+        //         localStorage.setItem('org', JSON.stringify(data));
+        //     } catch (error) {
+        //         showError('Unable to fetch organization');
+        //     }
+        // },
         onOrderSuccess() {
             this.openCR = false;
-
-            this.$store.dispatch('fetchOrders');
+            // this.$store.dispatch('fetchOrders');
+            this.issued = this.issued + 5000;
         }
     },
 
     mounted() {
-        this.fetchOrg();
+        // this.fetchOrg();
     }
 };
 </script>
 
 <style lang="scss">
 .app-body {
-    padding: 40px 80px 0;
+    padding: 40px;
     border-top: 1px solid #ededed;
     button {
         height: 40px;
