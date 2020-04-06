@@ -10,7 +10,7 @@
                         <div>
                             <div class="subtitle is-6">
                                 NOTE: You can issue only 5,000 
-                                <br /> passes in a single request
+                                <br /> vouchers in a single request
                             </div>
 
                             <div></div>
