@@ -4,23 +4,23 @@
             <div class="container">
                 <div class="level">
                     <div class="level-left">
-                        <div class="level-item org-details">
+                        <div class="level-item org-details" v-if="this.org">
                             <div
                                 class="has-text-black is-size-5 has-text-weight-semibold is-full-mobile"
                             >
-                                {{ availableOrders | formatNumber }} vouchers
-                                available
+                                {{
+                                    (org.total_vouchers - org.used_vouchers)
+                                        | formatNumber
+                                }}
+                                vouchers available
                             </div>
                             <div class="seperator"></div>
                             <div
                                 class="has-text-black is-size-5 has-text-weight-semibold is-full-mobile"
                             >
-                                {{ issuedOrders | formatNumber }} vouchers
+                                {{ org.used_vouchers | formatNumber }} vouchers
                                 issued
                             </div>
-                            <!-- <div class="is-block has-text-black has-text-weight-semibold">
-                                <div class="is-size-5">{{ org.name }}</div>
-                            </div>-->
                         </div>
                     </div>
                     <div class="level-right">
@@ -45,8 +45,8 @@
 
 <script>
 import CreateRequest from '../components/CreateRequest.vue';
-// import EPassService from '../service/EPassService';
-// import { showError } from '../utils/toast';
+import organizationService from '../service/organization';
+import { showError } from '../utils/toast';
 
 export default {
     name: 'Dashboard',
@@ -54,26 +54,27 @@ export default {
         CreateRequest
     },
     data() {
-        // let org = localStorage.getItem('org');
-        // if (org) {
-        //     org = JSON.parse(org);
-        // }
+        let org = localStorage.getItem('org');
+        if (org) {
+            org = JSON.parse(org);
+        }
         return {
-            openCR: false,
-            total: 100000,
-            issued: 0
+            fetching: true,
+            isValid: false,
+            fetchError: false,
+            redeeming: false,
+            loader: null,
+            org: org,
+            openCR: false
         };
     },
 
     computed: {
         totalOrders() {
-            return this.total;
+            return this.org.total_vouchers;
         },
         issuedOrders() {
-            return this.issued;
-        },
-        availableOrders() {
-            return this.total - this.issued;
+            return this.org.used_vouchers;
         }
     },
     filters: {
@@ -85,24 +86,33 @@ export default {
         openCreateRequest() {
             this.openCR = true;
         },
-        // async fetchOrg() {
-        //     try {
-        //         const { data } = await EPassService.getOrganization();
-        //         this.org = data;
-        //         localStorage.setItem('org', JSON.stringify(data));
-        //     } catch (error) {
-        //         showError('Unable to fetch organization');
-        //     }
-        // },
+        fetchOrg() {
+            return organizationService(this)
+                .fetchOrganization()
+                .then(res => {
+                    this.fetching = false;
+                    this.loader.close();
+                    this.isValid = true;
+                    this.org = res.data;
+                    localStorage.setItem('org', JSON.stringify(res.data));
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.loader.close();
+                    this.fetching = false;
+                    this.fetchError = true;
+                    showError('Unable to fetch organization');
+                });
+        },
         onOrderSuccess() {
             this.openCR = false;
-            // this.$store.dispatch('fetchOrders');
-            this.issued = this.issued + 5000;
+            this.fetchOrg();
         }
     },
 
     mounted() {
-        // this.fetchOrg();
+        this.loader = this.$buefy.loading.open();
+        this.fetchOrg();
     }
 };
 </script>

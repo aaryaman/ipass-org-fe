@@ -61,7 +61,7 @@ export default {
     },
 
     getOrganization() {
-        return app.$axios.post('/getOrganization', {
+        return app.$axios.post('/organizations/current', {
             // authToken: getAuthToken()
         });
     }

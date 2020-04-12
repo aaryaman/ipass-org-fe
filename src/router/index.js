@@ -12,9 +12,6 @@ import Static from '../views/static';
 import GetOTP from '../views/static/GetOTP.vue';
 // import LabDetails from '../views/static/LabDetails.vue';
 import NewDashboard from '../views/static/NewDashboard.vue';
-import RedeemVoucher from '../views/RedeemVoucher.vue';
-import VoucherDetails from '../views/VoucherDetails.vue';
-import VoucherSuccess from '../views/VoucherSuccess.vue';
 
 Vue.use(VueRouter);
 
@@ -42,32 +39,13 @@ const routes = [
         name: Dashboard.name,
         component: Dashboard,
         meta: {
-            // auth: true
+            auth: true
         },
         children: [
             {
-                path: '/dashboard',
+                path: 'dashboard',
                 name: 'Dashboard',
                 component: DashboardOld
-            },
-            {
-                path: 'lab-details',
-                component: LabDetails
-            },
-            {
-                path: '/voucher/redeem',
-                name: 'RedeemVoucher',
-                component: RedeemVoucher
-            },
-            {
-                path: '/voucher/:id',
-                name: 'VoucherDetails',
-                component: VoucherDetails
-            },
-            {
-                path: '/voucher/:id/success',
-                name: 'VoucherSuccess',
-                component: VoucherSuccess
             }
         ]
     },

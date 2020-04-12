@@ -9,8 +9,8 @@
                     <transition appear mode="out-in" name="fade">
                         <div>
                             <div class="subtitle is-6">
-                                NOTE: You can issue only 5,000 
-                                <br /> vouchers in a single request
+                                NOTE: You can issue only 5,000
+                                <br />vouchers in a single request
                             </div>
 
                             <div></div>
@@ -33,10 +33,12 @@
                             <div class="title is-6">Upload the file</div>
                             <div></div>
                             <div class="subtitle is-7">
-                                Ensure that column 1 contains the name, column 2 
-                                <br /> contains the mobile number, column 3 contains the 
-                                <br /> ID type (eg. Aadhaar/PAN/MNREGA/BMC), and column 4
-                                <br /> contains the last 4 digits of the ID chosen in column 3
+                                Ensure that column 1 contains the name, column 2
+                                <br />contains the mobile number, column 3
+                                contains the <br />ID type (eg.
+                                Aadhaar/PAN/MNREGA/BMC), column 4 <br />contains
+                                the last 4 digits of the ID chosen in column 3,
+                                and <br />column 5 contains the employee ID.
                             </div>
 
                             <label
@@ -89,9 +91,12 @@
                             />
                         </div>
 
-                        <div class="title is-4">Vouchers issued successfully!</div>
+                        <div class="title is-4">
+                            Vouchers issued successfully!
+                        </div>
                         <div class="subtitle is-7">
-                            The vouchers will shortly be issued via SMS to the mobile numbers of the voucher holders.
+                            The vouchers will shortly be issued via SMS to the
+                            mobile numbers of the voucher holders.
                         </div>
                     </div>
                 </template>
@@ -118,8 +123,8 @@
 
 <script>
 import SideSheet from './SideSheet.vue';
-import EPassService from '../service/EPassService';
-import { getAuthToken } from '../utils/session';
+import organizationService from '../service/organization';
+// import { getAuthToken } from '../utils/session';
 import { getError } from '../utils/error-handler';
 
 export default {
@@ -176,26 +181,24 @@ export default {
 
             this.createOrder();
         },
-
-        async createOrder() {
+        createOrder() {
+            console.log('create order');
             this.apiError = null;
             const formData = new FormData();
 
             formData.append('file', this.file);
-            formData.append('orderType', this.passType);
-            formData.append('purpose', this.selectedReason);
-            formData.append('authToken', getAuthToken());
 
-            this.loading = true;
-
-            try {
-                await EPassService.createOrder(formData);
-                this.requestCreated = true;
-            } catch (error) {
-                this.apiError = getError(error);
-            }
-
-            this.loading = false;
+            return organizationService(this)
+                .uploadVoucher(formData)
+                .then(() => {
+                    this.requestCreated = true;
+                    this.loading = false;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.loading = false;
+                    this.apiError = getError(error);
+                });
         }
     }
 };

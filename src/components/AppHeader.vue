@@ -12,7 +12,9 @@
             <template slot="start">
                 <div class="is-flex ai-center">
                     <div class="seperator"></div>
-                    <div class="title is-4 has-text-white">BMC Dashboard</div>
+                    <div class="title is-4 has-text-white">
+                        {{ user.name }} Dashboard
+                    </div>
                 </div>
             </template>
             <template slot="end">
@@ -25,7 +27,6 @@
 
                         <b-dropdown-item disabled>
                             <b>Logged in as {{ user.name }}</b>
-                            <p>{{ user.email }}</p>
                         </b-dropdown-item>
                         <hr class="dropdown-divider" />
                         <b-dropdown-item
@@ -50,9 +51,10 @@ import { clearSession } from '../utils/session';
 export default {
     name: 'AppHeader',
     data() {
-        let user = localStorage.getItem('user');
+        let user = localStorage.getItem('org');
         if (user) user = JSON.parse(user);
-
+        console.log('------');
+        console.log(user);
         return {
             selectedLang: 'En',
             langs: ['Hi'],

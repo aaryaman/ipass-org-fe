@@ -3,9 +3,11 @@ import app from '../main';
 export default {
     requestOtp(phoneNumber) {
         return app.axios({
-            url: '/requestOtp',
+            method: 'post',
+            url: 'send_otp',
             data: {
-                phoneNumber: phoneNumber
+                identifier: phoneNumber,
+                identifierType: 'MOBILE'
             }
         });
     }

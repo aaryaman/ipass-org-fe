@@ -8,11 +8,11 @@ export default () => {
                     Authorization: 'Bearer ' + token
                 });
             },
-            tokenName: 'token',
+            tokenName: 'access_token',
             response: function(res) {
                 var headers = this.options.http._getHeaders.call(this, res);
                 var token = headers.Authorization || headers.authorization;
-                token = token || res.data.token;
+                token = token || res.data.access_token;
                 return token;
             }
         },
@@ -20,14 +20,18 @@ export default () => {
         http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
         router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
         loginData: {
-            url: '/auth',
+            url: '/verify_otp',
             method: 'POST',
-            redirect: '/user',
-            fetchUser: true
+            redirect: '/dashboard',
+            fetchUser: false
         },
         logoutData: { redirect: '/login' },
         refreshData: { url: 'auth/refresh', method: 'GET', enabled: false },
-        fetchData: { url: '/user/me', method: 'GET', enabled: true },
+        fetchData: {
+            url: '/organizations/current',
+            method: 'GET',
+            enabled: false
+        },
         parseUserData: function(data) {
             return data;
         }
