@@ -6,7 +6,7 @@ import qs from 'qs';
 
 const BASE_URL = (() => {
     const DEFAULT_API = 'http://13.235.128.146:8080/v1/';
-    const EPASS_API = `${window.location.protocol}//${window.location.hostname}/ecurfew`;
+    const EPASS_API = 'http://13.235.128.146:8080/v1/';
 
     if (!isProd || isGithub) {
         return DEFAULT_API;
