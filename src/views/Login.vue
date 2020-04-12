@@ -44,6 +44,7 @@
 
 <script>
 import authService from '../service/auth';
+import { showError, showSuccess } from '../utils/toast';
 
 export default {
     name: 'Login',
@@ -63,43 +64,41 @@ export default {
             this.isLoading = true;
             return authService
                 .requestOtp(this.form.phoneNumber)
-                .then(res => {
-                    console.log(res);
+                .then(() => {
                     this.isLoading = false;
                     this.otpForm = false;
+                    showSuccess('Please check your phone for an OTP.', 5000);
                 })
                 .catch(() => {
                     this.isLoading = false;
-                    this.$buefy.toast.open({
-                        duration: 5000,
-                        message: `Something's not right. Please try again later.`,
-                        type: 'is-danger'
-                    });
+                    showError(
+                        `Something's not right. Please try again later.`,
+                        5000
+                    );
                 });
         },
         attemptLogin() {
-            return this.$auth.login({
-                data: {
-                    otp: this.form.otp,
-                    identifier: this.form.phoneNumber
-                }
-            });
-            // if (this.form.otp === '123456') {
-            //     return this.$router.push('/dashboard');
-            // } else {
-            //     this.$buefy.toast.open({
-            //         duration: 5000,
-            //         message: `Incorrect OTP. Please try again.`,
-            //         type: 'is-danger'
-            //     });
-            // }
+            return this.$auth
+                .login({
+                    data: {
+                        otp: this.form.otp,
+                        identifier: this.form.phoneNumber
+                    }
+                })
+                .catch(err => {
+                    this.isLoading = false;
+                    if (err.response && err.response.status === 400) {
+                        showError(err.response.data.message, 5000);
+                    } else {
+                        showError(
+                            `Something's not right. Please try again later.`,
+                            5000
+                        );
+                    }
+                });
         },
         resendOtp() {
-            this.$buefy.toast.open({
-                duration: 5000,
-                message: `Please check your phone for an OTP.`,
-                type: 'is-success'
-            });
+            this.requestOtp();
         }
     }
 };

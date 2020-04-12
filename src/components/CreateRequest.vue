@@ -66,9 +66,9 @@
                                     icon="check-circle"
                                     type="is-success"
                                 ></b-icon>
-                                <span class="subtitle is-6">
-                                    {{ file.name }}
-                                </span>
+                                <span class="subtitle is-6">{{
+                                    file.name
+                                }}</span>
                             </div>
                             <br />
                             <div
@@ -124,7 +124,6 @@
 <script>
 import SideSheet from './SideSheet.vue';
 import organizationService from '../service/organization';
-// import { getAuthToken } from '../utils/session';
 import { getError } from '../utils/error-handler';
 
 export default {
