@@ -66,9 +66,9 @@
                                     icon="check-circle"
                                     type="is-success"
                                 ></b-icon>
-                                <span class="subtitle is-6">{{
-                                    file.name
-                                }}</span>
+                                <span class="subtitle is-6">
+                                    {{ file.name }}
+                                </span>
                             </div>
                             <br />
                             <div
@@ -181,7 +181,6 @@ export default {
             this.createOrder();
         },
         createOrder() {
-            console.log('create order');
             this.apiError = null;
             const formData = new FormData();
 
@@ -194,7 +193,6 @@ export default {
                     this.loading = false;
                 })
                 .catch(error => {
-                    console.log(error);
                     this.loading = false;
                     this.apiError = getError(error);
                 });

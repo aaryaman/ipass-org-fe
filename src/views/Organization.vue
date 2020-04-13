@@ -96,8 +96,7 @@ export default {
                     this.org = res.data;
                     localStorage.setItem('org', JSON.stringify(res.data));
                 })
-                .catch(error => {
-                    console.log(error);
+                .catch(() => {
                     this.loader.close();
                     this.fetching = false;
                     this.fetchError = true;

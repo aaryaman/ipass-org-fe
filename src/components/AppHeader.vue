@@ -53,8 +53,6 @@ export default {
     data() {
         let user = localStorage.getItem('org');
         if (user) user = JSON.parse(user);
-        console.log('------');
-        console.log(user);
         return {
             selectedLang: 'En',
             langs: ['Hi'],
